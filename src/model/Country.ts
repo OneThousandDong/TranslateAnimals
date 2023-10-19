@@ -1,8 +1,4 @@
-export type Country = {
-  id: string;
+export type Animal = {
   name: string;
   uri: any;
-  answer: string[];
-  correct: number;
-  index: number;
 };
