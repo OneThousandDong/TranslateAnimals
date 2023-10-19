@@ -30,7 +30,7 @@ const HomeScreen = ({route, navigation}) => {
   const [modalVisible, setModalVisible] = useState(false);
 
   useEffect(() => {
-    animationRef.current?.play();
+    // animationRef.current?.play();
   }, []);
 
   const handleTabPress = (tab: any) => {
@@ -38,10 +38,12 @@ const HomeScreen = ({route, navigation}) => {
       setValueJSX1(<></>);
       setValue1(false);
       setValueJSX2(<></>);
+      return;
     } else if (tab == 'tab3') {
       setValueJSX3(<></>);
       setValue3(false);
       setValueJSX2(<></>);
+      return;
     } else if (tab == 'tab2') {
       setValueJSX2(<Svgs.HorseSVG height={100} width={100} />);
       animationRef.current.play();
@@ -103,35 +105,34 @@ const HomeScreen = ({route, navigation}) => {
 
   const ModalPopup = ({visible}) => {
     const scaleValue = React.useRef(new Animated.Value(0)).current;
-    const [showModal, setShowModal] = useState(visible);
+    // const [showModal, setShowModal] = useState(visible);
     useEffect(() => {
       toggleModal();
     }, [visible]);
 
     const toggleModal = () => {
       if (visible) {
-        setShowModal(true);
+        setModalVisible(true);
         Animated.spring(scaleValue, {
-          toValue: 0.9,
+          toValue: 1,
           tension: 50,
           friction: 2,
           useNativeDriver: true,
         }).start();
       } else {
-        scaleValue.setValue(0);
-      }
-      setTimeout(() => {
-        Animated.spring(scaleValue, {
-          toValue: 1,
+        Animated.timing(scaleValue, {
+          toValue: 0,
+          duration: 300,
           useNativeDriver: true,
-        }).start(() => {
-          setShowModal(false);
-        });
-      }, 3000);
+        }).start();
+        setTimeout(() => {
+          setModalVisible(false);
+        }, 3000);
+      }
     };
 
     return (
-      <Modal transparent visible={showModal}>
+      <Modal transparent visible={modalVisible}>
         <View className="rounded-md" style={styles.modalContainer}>
           <Animated.View
             style={{transform: [{scale: scaleValue}], width: width / 3, height: width / 3 }}>
