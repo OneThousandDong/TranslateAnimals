@@ -59,6 +59,9 @@ const HomeScreen = ({route, navigation}) => {
   const timeLottie = async () => {
     await delay(3000);
     setLottieVisible(false);
+    setValueJSX1(<></>);
+    setValueJSX2(<></>);
+    setValueJSX3(<></>);
   };
 
   return (
