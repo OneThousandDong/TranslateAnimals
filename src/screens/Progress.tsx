@@ -14,15 +14,31 @@ const ProgressBar = () => {
   const animatedValueProgress = useRef(new Animated.Value(0)).current;
 
   useEffect(() => {
-    if (timer == TimeCount) {
+    if (timer == 0) {
       setTimeSuggest(timeSuggest + 1);
+      setTimer(10 + 1);
     }
   }, [timer]);
 
   useEffect(() => {
-    setInterval(startInterval, 1000);
+    const interval = setInterval(startInterval, 1000);
+    return () => clearInterval(interval);
   }, []);
 
+  const startInterval = () => {
+    setTimer(prv => {
+      if (prv === 0) {
+        // setTimer(TimeCount);
+        setProgress(TimeCount);
+        setTimeSg(timeSg + 1);
+        return;
+      } else {
+        setProgress(prv - 1);
+        return prv - 1;
+      }
+    });
+  };
+  
   const formatSecondToMinutes = (second_num: number) => {
     if (second_num) {
       const minutes = Math.floor(second_num / 60);
@@ -35,24 +51,10 @@ const ProgressBar = () => {
     }
   };
 
-  const startInterval = () => {
-    setTimer(prv => {
-      if (prv === 0) {
-        setTimer(TimeCount);
-        setProgress(TimeCount);
-        setTimeSg(timeSg + 1);
-        return;
-      } else {
-        setProgress(prv - 1);
-        return prv - 1;
-      }
-    });
-  };
-
   useEffect(() => {
     Animated.timing(animatedValue, {
       toValue: progress / 10,
-      duration: 1000,
+      duration: 300,
       useNativeDriver: false,
     }).start();
   }, [animatedValue, progress]);

@@ -32,8 +32,31 @@ const HomeScreen = ({route, navigation}) => {
   const [isModalVisible, setModalVisible] = useState(false);
   const [isLottieVisible, setLottieVisible] = useState(false);
 
+  const [showView, setShowView] = useState(false);
+  const opacityValue = useState(new Animated.Value(0))[0];
+
+  useEffect(() => {
+    if (value1) {
+      Animated.timing(opacityValue, {
+        toValue: 1,
+        duration: 1000,
+        useNativeDriver: true,
+      }).start();
+    } else {
+      Animated.timing(opacityValue, {
+        toValue: 0,
+        duration: 1000,
+        useNativeDriver: true,
+      }).start();
+    }
+  }, [value1, opacityValue]);
+
   const delay = ms => new Promise(res => setTimeout(res, ms));
+
   const handleTabPress = (tab: any) => {
+    console.log('====================================');
+    console.log('Hii');
+    console.log('====================================');
     if (tab == 'tab1') {
       setValueJSX1(<></>);
       setValue1(false);
@@ -62,6 +85,8 @@ const HomeScreen = ({route, navigation}) => {
     setValueJSX1(<></>);
     setValueJSX2(<></>);
     setValueJSX3(<></>);
+    setValue1(false);
+    setValue3(false);
   };
 
   return (
@@ -76,8 +101,12 @@ const HomeScreen = ({route, navigation}) => {
             initialNumToRender={AnimalsEng.length}
             keyExtractor={(item, index) => item.name}
             renderItem={item => (
-              <TouchableWithoutFeedback
+              <TouchableOpacity
                 onPress={() => {
+                  console.log('====================================');
+                  console.log(value1);
+                  console.log(value3);
+                  console.log('====================================');
                   if (!value1) {
                     setValueJSX1(item.item.uri);
                     setValue1(true);
@@ -92,7 +121,7 @@ const HomeScreen = ({route, navigation}) => {
                 <View style={{width: width / 4.1, height: 200, borderWidth: 1}}>
                   {item.item.uri}
                 </View>
-              </TouchableWithoutFeedback>
+              </TouchableOpacity>
             )}
             ListHeaderComponent={
               <View>
@@ -173,7 +202,13 @@ const HomeScreen = ({route, navigation}) => {
             <View
               className="flex-1 justify-center items-center bg-amber-200 border-2"
               style={{borderRadius: width / 5 / 2}}>
-              {valueJSX1}
+                 <Animated.View
+                    style={{
+                      opacity: opacityValue,
+                    }}
+              >
+                {valueJSX1}
+              </Animated.View>
             </View>
           </TouchableOpacity>
           <View className="w-8 h-3 " />
@@ -205,11 +240,12 @@ const HomeScreen = ({route, navigation}) => {
 
       {isLottieVisible ? (
         <LottieView
-          // style={{
-          //   width: 400,
-          //   height: 500,
-          //   position: 'absolute',
-          // }}
+          style={{
+            // width: 400,
+            // height: 500,
+            // position: 'absolute',
+            // backgroundColor: 'red'
+          }}
           // loop={true}
           autoPlay
           // ref={animationRef}
