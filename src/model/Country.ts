@@ -1,4 +1,4 @@
 export type Animal = {
-  name: string;
+  name: any;
   uri: any;
 };
