@@ -1,7 +1,7 @@
 import {StyleSheet, View, Text, Dimensions, Animated} from 'react-native';
 import React, {useState, useEffect, useRef} from 'react';
 import useStorageStore from '../store/useStorageStore';
-const TimeCount = 10;
+const TimeCount = 300;
 const ProgressBar = () => {
   const {width} = Dimensions.get('window');
   const {timeSuggest} = useStorageStore();
@@ -16,7 +16,7 @@ const ProgressBar = () => {
   useEffect(() => {
     if (timer == 0) {
       setTimeSuggest(timeSuggest + 1);
-      setTimer(10 + 1);
+      setTimer(TimeCount + 1);
     }
   }, [timer]);
 
@@ -38,11 +38,13 @@ const ProgressBar = () => {
       }
     });
   };
-  
   const formatSecondToMinutes = (second_num: number) => {
     if (second_num) {
       const minutes = Math.floor(second_num / 60);
       const sec = second_num % 60;
+      if (sec === 11 && minutes === 0) {
+        return '00:00';
+      }
       return `${minutes < 10 ? '0' + minutes : minutes}:${
         sec < 10 ? '0' + sec : sec
       }`;
@@ -53,7 +55,7 @@ const ProgressBar = () => {
 
   useEffect(() => {
     Animated.timing(animatedValue, {
-      toValue: progress / 10,
+      toValue: progress / 3 / 100,
       duration: 300,
       useNativeDriver: false,
     }).start();

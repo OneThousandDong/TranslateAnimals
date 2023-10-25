@@ -18,7 +18,8 @@ const useStorageStore = create<WorldState>()(
       setLanguageState: (languageState: string) => set({languageState}),
       timeSuggest: 0,
       setTimeSuggest: (timeSuggest: number) => set({timeSuggest}),
-
+      resultApp: [10, 9, 7, 8, 2, 3, 4],
+      setResultApp: (resultApp: number[]) => set({resultApp}),
     }),
     {
       name: 'store',

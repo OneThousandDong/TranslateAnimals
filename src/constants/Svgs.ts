@@ -10,6 +10,7 @@ import HeartSVG from '../assets/svg/ic_heart.svg';
 import MusicSVG from '../assets/svg/ic_music.svg';
 import MuteSVG from '../assets/svg/ic_mute.svg';
 import Water from '../assets/svg/ic_water.svg';
+import React from '../assets/svg/ic_react.svg';
 
 export default {
   CloseSvg,
@@ -23,5 +24,6 @@ export default {
   HeartSVG,
   MusicSVG,
   MuteSVG,
-  Water
+  Water,
+  React,
 };
