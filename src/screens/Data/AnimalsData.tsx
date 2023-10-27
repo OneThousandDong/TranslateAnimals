@@ -1,41 +1,61 @@
 import {Animal} from '../../model/Country';
 import Svgs from '../../constants/Svgs';
+import Soil from "../../assets/svg/item/ic_soil.svg";
 
 export const AnimalsEng: Animal[] = [
   {
+    // Nước
     name: 0,
     uri: <Svgs.Water height={50} width={50} />,
-    result: 10,
+    result: 999,
   },
   {
+    // Đất
     name: 1,
-    uri: <Svgs.Water height={50} width={50} />,
-    result: 9,
+    uri: <Svgs.Soil height={50} width={50} />,
+    result: 999,
   },
   {
+    // Lửa
     name: 2,
-    uri: <Svgs.Water height={50} width={50} />,
+    uri: <Svgs.Fire height={50} width={50} />,
+    result: 999,
+  },
+  {
+    //Không khí
+    name: 3,
+    uri: <Svgs.Air height={50} width={50} />,
+    result: 999,
+  },
+  {
+    // Mây
+    name: 4,
+    uri: <Svgs.Cloud height={50} width={50} />,
+    result: 5, // 0 + 5
+  },
+  {
+    // Nhiệt độ
+    name: 5,
+    uri: <Svgs.Temperature height={50} width={50} />,
+    result: 4, // 2 + 2
+  },
+  {
+    //Cây
+    name: 6,
+    uri: <Svgs.Tree height={50} width={50} />,
     result: 7,
   },
   {
-    name: 3,
-    uri: <Svgs.Water height={50} width={50} />,
-    result: 8,
+    // Thực vật
+    name: 7,
+    uri: <Svgs.Plants height={50} width={50} />,
+    result: 1,
   },
   {
-    name: 4,
-    uri: <Svgs.Water height={50} width={50} />,
-    result: 2,
-  },
-  {
-    name: 5,
-    uri: <Svgs.Water height={50} width={50} />,
-    result: 3,
-  },
-  {
-    name: 6,
-    uri: <Svgs.Water height={50} width={50} />,
-    result: 4,
+    //Rừng
+    name: 8,
+    uri: <Svgs.Forest height={50} width={50} />,
+    result: 12,
   },
   // {name: 7, uri: <Svgs.Water height={50} width={50}/>},
   // {name: 8, uri: <Svgs.Water height={50} width={50}/>},

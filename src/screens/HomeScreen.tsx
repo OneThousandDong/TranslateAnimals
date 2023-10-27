@@ -29,8 +29,9 @@ const HomeScreen = ({route, navigation}) => {
     timeSuggest,
     resultApp,
     setResultApp,
+    currentData,
+    setCurrentData,
   } = useStorageStore();
-  // const animationRef = useRef<LottieView>(null);
   const [valueJSX1, setValueJSX1] = useState<Animal>();
   const [valueJSX3, setValueJSX3] = useState<Animal>();
   const [valueJSX2, setValueJSX2] = useState(
@@ -95,17 +96,17 @@ const HomeScreen = ({route, navigation}) => {
         const resultValue2 = valueJSX1?.name + valueJSX3?.name;
         if (AnimalsEng.filter(i => i.result == resultValue2).length > 0) {
           const result = AnimalsEng.find(i => i.result == resultValue2)?.result;
-          if (resultApp.filter(i => i == result).length > 0) {
+          if (resultApp.filter(i => i.result == result).length > 0) {
             // animationRef?.current?.play();
             setLottieVisible(true);
             setModalVisible(true);
             timeLottie();
-            setResultApp(resultApp.filter(i => i !== result));
+            setResultApp(resultApp.filter(i => i.result !== result));
+            setCurrentData(resultApp?.find(i => i.result == result)?.name);
           }
           setValueJSX2(AnimalsEng.find(i => i.result == resultValue2)?.uri);
         } else {
           startAnimation();
-          console.log('Kong cos');
         }
       }
     }
@@ -116,7 +117,7 @@ const HomeScreen = ({route, navigation}) => {
       index == 1 ? item?.name + valueJSX3?.name : valueJSX1?.name + item?.name;
     if (AnimalsEng.filter(i => i.result == resultValue2).length > 0) {
       const result = AnimalsEng.find(i => i.result == resultValue2)?.result;
-      if (resultApp.filter(i => i == result).length == 0) {
+      if (resultApp.filter(i => i.result == result).length == 0) {
         setValueJSX2(AnimalsEng.find(i => i.result == resultValue2)?.uri);
       }
     }
@@ -164,24 +165,14 @@ const HomeScreen = ({route, navigation}) => {
 
   const renderItem = () => {
     const columns = [];
-    for (let i = 0; i < AnimalsEng.length; i += 2) {
-      const columnItems = AnimalsEng.slice(i, i + 2);
+    for (let i = 0; i < resultApp.length; i += 2) {
+      const columnItems = resultApp.slice(i, i + 2);
       const column = (
         <View key={i} style={styles.row}>
           {columnItems.map((item, index) => (
             <TouchableOpacity
               key={index}
               onPress={() => {
-                if (!value1) {
-                  setValueJSX1(item.uri);
-                  setValue1(true);
-                  return;
-                }
-                if (!value3) {
-                  setValueJSX3(item.uri);
-                  setValue3(true);
-                  return;
-                }
               }}>
               <View className="m-4">
                 <View className="rounded-xl">
@@ -195,7 +186,7 @@ const HomeScreen = ({route, navigation}) => {
                       borderRadius: width / 6 / 2,
                     }}>
                     <View className="rounded-xl flex flex-row justify-center">
-                      {item.uri}
+                      {AnimalsEng.find(i => i.name == item.name)?.uri}
                     </View>
                   </View>
                 </View>
@@ -216,33 +207,36 @@ const HomeScreen = ({route, navigation}) => {
         <FlatList
           numColumns={4}
           contentContainerStyle={{margin: 5}}
-          data={AnimalsEng}
-          initialNumToRender={AnimalsEng.length}
-          keyExtractor={(item, index) => item.name}
+          data={currentData}
+          initialNumToRender={currentData.length}
+          keyExtractor={(item, index) => item}
           renderItem={item => (
             <TouchableOpacity
               onPress={async () => {
+                let itemData: Animal = AnimalsEng.find(
+                  i => i.name == item.item,
+                );
                 if (!value1) {
-                  setValueJSX1(item.item);
+                  setValueJSX1(itemData);
                   setValue1(true);
                   if (value3) {
                     await delay(200);
-                    checkContainValue(item.item, 1);
+                    checkContainValue(itemData, 1);
                   }
                   return;
                 }
                 if (!value3) {
-                  setValueJSX3(item.item);
+                  setValueJSX3(itemData);
                   setValue3(true);
                   if (value1) {
                     await delay(200);
-                    checkContainValue(item.item, 3);
+                    checkContainValue(itemData, 3);
                   }
                   return;
                 }
               }}>
-              <View style={{width: width / 4.1, height: 200, borderWidth: 1}}>
-                {item.item.uri}
+              <View style={{width: width / 4.1, height: 60, borderWidth: 1}}>
+                {AnimalsEng.find(i => i.name == item.item)?.uri}
               </View>
             </TouchableOpacity>
           )}
@@ -287,7 +281,6 @@ const HomeScreen = ({route, navigation}) => {
               <View
                 style={{
                   height: Dimensions.get('window').height,
-
                   width: Dimensions.get('window').width,
                   marginBottom: 10,
                   flexDirection: 'row',
