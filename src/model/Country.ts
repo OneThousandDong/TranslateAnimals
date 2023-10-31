@@ -1,5 +1,7 @@
 export type Animal = {
-  name: any;
+  id: any;
+  // name: any;
   uri: any;
   result: any;
+  nameVi: any;
 };

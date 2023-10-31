@@ -93,7 +93,7 @@ const HomeScreen = ({route, navigation}) => {
       return;
     } else if (tab == 'tab2') {
       if (value1 && value3) {
-        const resultValue2 = valueJSX1?.name + valueJSX3?.name;
+        const resultValue2 = valueJSX1?.id + valueJSX3?.id;
         if (AnimalsEng.filter(i => i.result == resultValue2).length > 0) {
           const result = AnimalsEng.find(i => i.result == resultValue2)?.result;
           if (resultApp.filter(i => i.result == result).length > 0) {
@@ -102,7 +102,7 @@ const HomeScreen = ({route, navigation}) => {
             setModalVisible(true);
             timeLottie();
             setResultApp(resultApp.filter(i => i.result !== result));
-            setCurrentData(resultApp?.find(i => i.result == result)?.name);
+            setCurrentData(resultApp?.find(i => i.result == result)?.id);
           }
           setValueJSX2(AnimalsEng.find(i => i.result == resultValue2)?.uri);
         } else {
@@ -114,7 +114,7 @@ const HomeScreen = ({route, navigation}) => {
 
   const checkContainValue = (item: Animal, index: number) => {
     const resultValue2 =
-      index == 1 ? item?.name + valueJSX3?.name : valueJSX1?.name + item?.name;
+      index == 1 ? item?.id + valueJSX3?.id : valueJSX1?.id + item?.id;
     if (AnimalsEng.filter(i => i.result == resultValue2).length > 0) {
       const result = AnimalsEng.find(i => i.result == resultValue2)?.result;
       if (resultApp.filter(i => i.result == result).length == 0) {
@@ -183,7 +183,7 @@ const HomeScreen = ({route, navigation}) => {
                       borderRadius: width / 6 / 2,
                     }}>
                     <View className="rounded-xl flex flex-row justify-center">
-                      {AnimalsEng.find(i => i.name == item.name)?.uri}
+                      {AnimalsEng.find(i => i.id == item.id)?.uri}
                     </View>
                   </View>
                 </View>
@@ -211,7 +211,7 @@ const HomeScreen = ({route, navigation}) => {
             <TouchableOpacity
               onPress={async () => {
                 let itemData: Animal = AnimalsEng.find(
-                  i => i.name == item.item,
+                  i => i.id == item.item,
                 );
                 if (!value1) {
                   setValueJSX1(itemData);
@@ -233,8 +233,9 @@ const HomeScreen = ({route, navigation}) => {
                 }
               }}>
               <View style={{width: width / 4.1, height: 60, borderWidth: 1}}>
-                {AnimalsEng.find(i => i.name == item.item)?.uri}
+                {AnimalsEng.find(i => i.id == item.item)?.uri}
               </View>
+              <Text>{AnimalsEng.find(i => i.id == item.item)?.nameVi}</Text>
             </TouchableOpacity>
           )}
           ListHeaderComponent={
