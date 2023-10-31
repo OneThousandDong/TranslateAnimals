@@ -170,10 +170,7 @@ const HomeScreen = ({route, navigation}) => {
       const column = (
         <View key={i} style={styles.row}>
           {columnItems.map((item, index) => (
-            <TouchableOpacity
-              key={index}
-              onPress={() => {
-              }}>
+            <TouchableOpacity key={index} onPress={() => {}}>
               <View className="m-4">
                 <View className="rounded-xl">
                   <View
